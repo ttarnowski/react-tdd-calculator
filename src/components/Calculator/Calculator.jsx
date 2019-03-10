@@ -52,13 +52,23 @@ class Calculator extends Component {
 
   setOperator = (operator) => {
     if (this.state.currentOperator.length > 0) {
-      this.evaluate();
+      this.evaluate(() => {
+        this.setState({ 
+          currentOperator: operator, 
+          newNumber: true,
+          ans: parseFloat(this.state.displayValue)
+        });    
+      });
+    } else {
+      this.setState({ 
+        currentOperator: operator, 
+        newNumber: true,
+        ans: parseFloat(this.state.displayValue)
+      });  
     }
-    this.setState({ currentOperator: operator, newNumber: true });
-    this.setState({ ans: parseFloat(this.state.displayValue) });
   };
 
-  evaluate = () => {
+  evaluate = (callback = () => {}) => {
     let result;
     const value = parseFloat(this.state.displayValue);
 
@@ -72,8 +82,10 @@ class Calculator extends Component {
       result = this.state.ans + value;
     }
 
-    this.setState({ displayValue: result.toString() });
-    this.setState({ ans: result.toString() });
+    this.setState({ 
+      displayValue: result.toString(),
+      ans: result.toString()
+    }, callback);
   };
 
   render() {
