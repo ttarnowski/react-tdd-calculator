@@ -11,7 +11,7 @@ class App extends Component {
     return (
       <div className="app-container">
         <Calculator store={new CalculatorStore()}/>
-        {process.env.NODE_ENV === 'development' ? <DevTools /> : ''}
+        {process.env.NODE_ENV === 'developmenta' ? <DevTools /> : ''}
       </div>  
     );
   }

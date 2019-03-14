@@ -27,7 +27,7 @@ app variables
   /* font weights */
   --display-text-weight: 400;
   --key-text-weight: 700;
-
+  
   /* calculator dimensions */
   --calculator-height: 72%;
   --calculator-width: 36%;
@@ -41,15 +41,11 @@ app variables
   --keypad-width: 96%;
 }
 
-/*
-media query for tablet or smaller screen
-*/
-
 @media screen and (max-width: 1024px) {
   :root {
     /* font sizes */
-    --display-text-size: 10em;
-    --key-text-size: 6em;
+    --display-text-size: 6em;
+    --key-text-size: 3em;
 
     /* calculator dimensions */
     --calculator-height: 100%;
@@ -58,7 +54,7 @@ media query for tablet or smaller screen
 }
 
 /*
-app CSS reset
+app CSS reset  
 */
 
 body, div, p {

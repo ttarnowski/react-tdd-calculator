@@ -1,5 +1,11 @@
 import CalculatorStore from './CalculatorStore';
 
+const PLUS = CalculatorStore.Operator.PLUS;
+const MINUS = CalculatorStore.Operator.MINUS;
+const MULTIPLY = CalculatorStore.Operator.MULTIPLY;
+const DIVIDE = CalculatorStore.Operator.DIVIDE;
+const EQUALS = CalculatorStore.Operator.EQUALS;
+
 describe('Calculator store', () => {
   let calculatorStore;
 
@@ -57,14 +63,14 @@ describe('Calculator store', () => {
   describe('::setOperator', () => {
     it('should not reset the actualValue when the operator has not been set before', () => {
       calculatorStore.addNumber("1");
-      calculatorStore.setOperator(CalculatorStore.Operator.PLUS);
+      calculatorStore.setOperator(PLUS);
 
       expect(calculatorStore.actualValue).toEqual("1");
     });
 
     it('should change the actualValue to the just added digit when the operator has been set one step before', () => {
       calculatorStore.addNumber("2");
-      calculatorStore.setOperator(CalculatorStore.Operator.PLUS);
+      calculatorStore.setOperator(PLUS);
       calculatorStore.addNumber("4");
 
       expect(calculatorStore.actualValue).toEqual("4");
@@ -72,7 +78,7 @@ describe('Calculator store', () => {
 
     it('should add the next to existing one in actualValue when the first digit has been set after setting the operator', () => {
       calculatorStore.addNumber("2");
-      calculatorStore.setOperator(CalculatorStore.Operator.PLUS);
+      calculatorStore.setOperator(PLUS);
       calculatorStore.addNumber("4");
       calculatorStore.addNumber("6");
 
@@ -81,90 +87,60 @@ describe('Calculator store', () => {
 
     it('should continue evaluating the expressions and change actualValue consecutively to the result', () => {
       calculatorStore.addNumber("2");
-      calculatorStore.setOperator(CalculatorStore.Operator.PLUS);
+      calculatorStore.setOperator(PLUS);
       calculatorStore.addNumber("4");
 
-      calculatorStore.setOperator(CalculatorStore.Operator.PLUS);
+      calculatorStore.setOperator(PLUS);
       calculatorStore.addNumber("6");
-      calculatorStore.setOperator(CalculatorStore.Operator.PLUS);
+      calculatorStore.setOperator(PLUS);
 
       expect(calculatorStore.actualValue).toEqual("12");
     });
 
     [
       {
-        steps: ["8", CalculatorStore.Operator.PLUS, "4", CalculatorStore.Operator.MINUS],
+        steps: ["8", PLUS, "4", MINUS],
         expectedDisplayValue: "12"
       },
       {
-        steps: ["1", "8", "3", CalculatorStore.Operator.MINUS, "2", "0", CalculatorStore.Operator.EQUALS],
+        steps: ["1", "8", "3", MINUS, "2", "0", EQUALS],
         expectedDisplayValue: "163"
       },
       {
-        steps: ["1", "2", CalculatorStore.Operator.MULTIPLY, "1", "2", CalculatorStore.Operator.EQUALS],
+        steps: ["1", "2", MULTIPLY, "1", "2", EQUALS],
         expectedDisplayValue: "144"
       },
       {
-        steps: ["2", "0", CalculatorStore.Operator.DIVIDE, "8", CalculatorStore.Operator.EQUALS],
+        steps: ["2", "0", DIVIDE, "8", EQUALS],
         expectedDisplayValue: "2.5"
       },
       {
-        steps: [
-          "1", 
-          CalculatorStore.Operator.PLUS, 
-          "2", 
-          CalculatorStore.Operator.MULTIPLY,
-          "1",
-          "2",
-          "8",
-          CalculatorStore.Operator.MINUS,
-          "9",
-          CalculatorStore.Operator.DIVIDE,
-          "10",
-          CalculatorStore.Operator.EQUALS
-        ],
+        steps: ["1", PLUS, "2", MULTIPLY, "1", "2", "8", MINUS,"9", DIVIDE, "10", EQUALS],
         expectedDisplayValue: "37.5"
       },
       {
-        steps: [
-          "2", 
-          CalculatorStore.Operator.PLUS, 
-          "2", 
-          CalculatorStore.Operator.EQUALS, 
-          "3", 
-          CalculatorStore.Operator.MULTIPLY, 
-          "12", 
-          CalculatorStore.Operator.EQUALS
-        ],
+        steps: ["2", PLUS, "2", EQUALS, "3", MULTIPLY, "12", EQUALS],
         expectedDisplayValue: "36"        
       },
       {
-        steps: [
-          "9", "9", "9", "9", "9", "9", 
-          CalculatorStore.Operator.PLUS, 
-          "9", "9", "9", "9", "9", "9",
-          CalculatorStore.Operator.EQUALS
-        ],
+        steps: ["9", "9", "9", "9", "9", "9", PLUS, "9", "9", "9", "9", "9", "9", EQUALS],
         expectedDisplayValue: "2.00e+6"
       },
       {
-        steps: [
-          "0", 
-          CalculatorStore.Operator.MINUS, 
-          "9", "9", "9", "9", "9", "9",
-          CalculatorStore.Operator.MULTIPLY,
-          "9", "9", "9", "9", "9", "9",
-          CalculatorStore.Operator.EQUALS
-        ],
+        steps: ["0", MINUS, "9", "9", "9", "9", "9", "9", MULTIPLY, "9", "9", "9", "9", "9", "9", EQUALS],
         expectedDisplayValue: "-1.0e+12"
       },
       {
-        steps: ["1", CalculatorStore.Operator.DIVIDE, "3", CalculatorStore.Operator.EQUALS],
+        steps: ["1", DIVIDE, "3", EQUALS],
         expectedDisplayValue: "0.33333"
       },
       {
-        steps: ["1", "0", "0", "0", "0", CalculatorStore.Operator.PLUS, "0", ".", "2", "3", "4", "5", CalculatorStore.Operator.EQUALS],
+        steps: ["1", "0", "0", "0", "0", PLUS, "0", ".", "2", "3", "4", "5", EQUALS],
         expectedDisplayValue: "10000.2"
+      },
+      {
+        steps: ["6", "4", MULTIPLY, "4", EQUALS, MINUS, "1", "2", "8", EQUALS],
+        expectedDisplayValue: "128"
       }
     ].forEach(testCase => {
       it(`should set displayValue to ${testCase.expectedDisplayValue} for the following steps: ${testCase.steps}`, () => {

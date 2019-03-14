@@ -28,7 +28,6 @@ class CalculatorStore {
   isFirstNumberProvided = false;
 
   @action.bound addNumber(number) {
-    debugger;
     if (this.isFirstNumberProvided === true) {
       this.actualValue = "0";
       this.isFirstNumberProvided = !this.isFirstNumberProvided;
@@ -53,7 +52,9 @@ class CalculatorStore {
   }
 
   @action.bound setOperator(operator) {
-    this.isFirstNumberProvided = !this.isFirstNumberProvided;
+    if (this.isFirstNumberProvided === false) {
+      this.isFirstNumberProvided = true;
+    }
 
     if (this.operator !== "") {
       this.actualValue = calculate(this.actualValue, this.previousValue, this.operator);
