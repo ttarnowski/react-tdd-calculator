@@ -6,14 +6,12 @@ import DevTools from 'mobx-react-devtools';
 
 import './App.css';
 
-const store = new CalculatorStore();
-
 class App extends Component { 
   render() {
     return (
       <div className="app-container">
-        <Calculator store={store}/>
-        <DevTools />
+        <Calculator store={new CalculatorStore()}/>
+        {process.env.NODE_ENV === 'development' ? <DevTools /> : ''}
       </div>  
     );
   }

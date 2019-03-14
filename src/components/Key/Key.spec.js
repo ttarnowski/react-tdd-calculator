@@ -9,8 +9,6 @@ describe('Key', () => {
 
   beforeEach(() => wrapper = shallow(<Key keyValue={''} keyType={''} action={jest.fn()} />));
 
-  // it('should render correctly', () => expect(wrapper).toMatchSnapshot());
-
   it('should render the value of keyValue within paragraph', () => {
     const expectedKeyValue = 'test';
     const paragraphSelector = '.key-value';
