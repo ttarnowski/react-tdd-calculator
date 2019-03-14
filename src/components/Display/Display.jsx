@@ -7,7 +7,7 @@ const Display = ({displayValue}) =>
     <p className="display-value">
       {displayValue}
     </p>
-  </div>
+  </div>;
 
 Display.propTypes = { displayValue: PropTypes.string.isRequired };
 
