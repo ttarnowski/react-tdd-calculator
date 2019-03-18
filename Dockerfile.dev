@@ -1,0 +1,6 @@
+FROM node:11.10.1
+WORKDIR /usr/app
+COPY ./package.json .
+RUN yarn
+COPY . /usr/app
+CMD ["yarn", "start"]

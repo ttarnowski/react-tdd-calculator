@@ -1,13 +1,10 @@
-FROM node:latest
-
+FROM node:11.10.1 as builder
 WORKDIR /usr/app
-
-COPY package.json .
-
+COPY ./package.json .
 RUN yarn
-
 COPY . /usr/app
+RUN yarn build
 
-#EXPOSE 3000
-
-#ENTRYPOINT ["yarn", "start"]
+FROM nginx:1.15.9
+EXPOSE 80
+COPY --from=builder /usr/app/build /usr/share/nginx/html

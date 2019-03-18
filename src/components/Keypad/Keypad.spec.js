@@ -8,7 +8,7 @@ import './Keypad.css';
 describe('Keypad', () => {
   let wrapper;
   beforeEach(() => wrapper = shallow(
-    <Keypad numbers={[]} operators={[]} evaluate={jest.fn()} />)
+    <Keypad numbers={[]} operators={[]} setOperator={jest.fn()} />)
   );
 
   it('should render 4 divs', () => {
