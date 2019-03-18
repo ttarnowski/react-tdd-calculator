@@ -1,0 +1,7 @@
+# docker-compose.yml
+version: '3.5'
+services:
+  react-app:
+    build: .
+    volumes:
+      - ./src:/usr/app/src
