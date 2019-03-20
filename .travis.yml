@@ -1,22 +1,42 @@
 sudo: required
 services:
   - docker
- 
+
 before_install:
   - docker build -t ttarnowski/docker-react-tdd-calculator-aws -f Dockerfile.dev .
- 
-script:
-  - docker run ttarnowski/docker-react-tdd-calculator-aws npm run test -- --coverage
- 
-deploy:
-  provider: elasticbeanstalk
-  region: "eu-west-2"
-  app: "docker-react-tdd-calculator-aws"
-  env: "DockerReactTddCalculatorAws-env"
-  bucket_name: "elasticbeanstalk-eu-west-2-421921815943"
-  bucket_path: "docker-react-tdd-calculator-aws"
-  on:
-    branch: master
-  access_key_id: $AWS_ACCESS_KEY
-  secret_access_key:
-    secure: "$AWS_SECRET_KEY"
+
+jobs:
+  include:
+    - stage: unit tests 
+      script:
+        - docker run ttarnowski/docker-react-tdd-calculator-aws npm run test -- --coverage
+    - stage: deploy to staging
+      if: branch = staging
+      script: skip
+      deploy: &elasticbeanstalk
+        provider: elasticbeanstalk
+        region: "eu-west-2"
+        app: "docker-react-tdd-calculator-aws"
+        env: "DockerReactTddCalculatorAws-uat"
+        bucket_name: "elasticbeanstalk-eu-west-2-421921815943"
+        bucket_path: "docker-react-tdd-calculator-aws"
+        on:
+          branch: staging
+        access_key_id: $AWS_ACCESS_KEY
+        secret_access_key:
+          secure: "$AWS_SECRET_KEY"
+    - stage: deploy to production
+      if: branch = master
+      script: skip
+      deploy: &elasticbeanstalk
+        provider: elasticbeanstalk
+        region: "eu-west-2"
+        app: "docker-react-tdd-calculator-aws"
+        env: "DockerReactTddCalculatorAws-env"
+        bucket_name: "elasticbeanstalk-eu-west-2-421921815943"
+        bucket_path: "docker-react-tdd-calculator-aws"
+        on:
+          branch: master
+        access_key_id: $AWS_ACCESS_KEY
+        secret_access_key:
+          secure: "$AWS_SECRET_KEY"
