@@ -7,4 +7,4 @@ RUN yarn build
 
 FROM nginx:1.15.9
 EXPOSE 80
-COPY --from=builder /usr/app/build /usr/new/nginx/build
+COPY --from=builder /usr/app/build /usr/share/nginx/html
