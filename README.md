@@ -1,4 +1,6 @@
 # React TDD Calculator
+[![Build Status](https://travis-ci.com/ttarnowski/react-tdd-calculator.svg?branch=master)](https://travis-ci.com/ttarnowski/react-tdd-calculator)
+
 A simple calculator created using pure React.js and refactored to use MobX.
 
 The development process has been loosely based on the [Test-Driven Development with React, Jest, and Enzyme](https://testdriven.io/blog/tdd-with-react-jest-and-enzyme-part-one/) tutorial.
