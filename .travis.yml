@@ -10,8 +10,8 @@ jobs:
     - stage: unit tests 
       script:
         - docker run ttarnowski/docker-react-tdd-calculator-aws npm run test -- --coverage
-    - stage: deploy to staging
-      if: branch = staging
+    - stage: deploy to uat
+      if: branch = develop
       script: skip
       deploy: &elasticbeanstalk
         provider: elasticbeanstalk
@@ -21,7 +21,7 @@ jobs:
         bucket_name: "elasticbeanstalk-eu-west-2-421921815943"
         bucket_path: "docker-react-tdd-calculator-aws"
         on:
-          branch: staging
+          branch: develop
         access_key_id: $AWS_ACCESS_KEY
         secret_access_key:
           secure: "$AWS_SECRET_KEY"
